@@ -33,7 +33,7 @@
 #   4. Get your API key (everyone has one). <http://trakt.tv/settings/api>
 #   5. Enter your trakt.tv username, password,
 #      and API key below where it says "<Enter Value Here>". Save!
-#   6. Optionally Change LOVE_MINIMUM to your desired value.
+#   6. Optionally change LOVE_MINIMUM to your desired value.
 #      All ratings equal or higher than this value on IMDb
 #      will be rated as "Love" or "Totally ninja!" on trakt.tv.
 #      All others will be rated as "Hate" or "Weak sauce :(".
@@ -59,7 +59,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with this program.  f not, see <http://www.gnu.org/licenses/>.
+#  along with this program. If not, see <http://www.gnu.org/licenses/>.
 ##############################################################
 
 
@@ -118,10 +118,11 @@ use constant SCRIPT_VERSION => '0.9';
 my @request_array = ();
 my %request_hash;
 my $request_str;
+my $response;
+my $decoded_response;
 my %response_hash;
 
 my $url_str;
-my $response;
 
 my @ratings;
 my $rating;
@@ -229,7 +230,13 @@ foreach $rating ( @ratings ) {
 
     DEBUG "$url_str\n\t$request_str\n\t$response\n";
 
-    %response_hash = %{ decode_json( $response ) };
+    $decoded_response = decode_json( $response );
+
+    if ( length( $decoded_response ) > 0 ) {
+        %response_hash = %{ decode_json( $response ) };
+    } else {
+        ERROR "No response!";
+    }
 
     $rating->{ 'rating-status' } = $response_hash{ 'status' };
     $rating->{ 'rating-error' } = $response_hash{ 'error' };
@@ -252,7 +259,13 @@ foreach $rating ( @ratings ) {
     
         DEBUG "RETRY (show): $url_str\n\t$request_str\n\t$response\n";
     
-        %response_hash = %{ decode_json( $response ) };
+        $decoded_response = decode_json( $response );
+
+        if ( length( $decoded_response ) > 0 ) {
+            %response_hash = %{ decode_json( $response ) };
+        } else {
+            ERROR "No response!";
+        }
     
         $rating->{ 'rating-status' } = $response_hash{ 'status' };
         $rating->{ 'rating-error' } = $response_hash{ 'error' };
@@ -303,7 +316,13 @@ foreach $rating ( @ratings ) {
             
         DEBUG "$url_str\n\t$request_str\n\t$response\n";
 
-        %response_hash = %{ decode_json( $response ) };
+        $decoded_response = decode_json( $response );
+
+        if ( length( $decoded_response ) > 0 ) {
+            %response_hash = %{ decode_json( $response ) };
+        } else {
+            ERROR "No response!";
+        }
 
         if ( $response_hash{ 'status' } eq 'success' ) {
             push( @skipped, @{ $response_hash{ 'skipped_movies' } } );
@@ -349,7 +368,13 @@ if ( scalar( @request_array ) > 1 ) {
         
     DEBUG "$url_str\n\t$request_str\n\t$response\n";
 
-    %response_hash = %{ decode_json( $response ) };
+    $decoded_response = decode_json( $response );
+
+    if ( length( $decoded_response ) > 0 ) {
+        %response_hash = %{ decode_json( $response ) };
+    } else {
+        ERROR "No response!";
+    }
 
     if ( $response_hash{ 'status' } eq 'success' ) {
         push( @skipped, @{ $response_hash{ 'skipped_movies' } } );
