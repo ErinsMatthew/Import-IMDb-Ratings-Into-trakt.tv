@@ -109,7 +109,7 @@ my $RECORD_SLEEP_TIME = 2_000_000;	# 2 seconds
 my $BATCH_SLEEP_TIME = 30_000_000;	# 30 seconds
 
 
-use constant SCRIPT_VERSION => '0.9';
+use constant SCRIPT_VERSION => '0.95';
 
 
 #
@@ -289,9 +289,9 @@ foreach $rating ( @ratings ) {
     #  build JSON array to mark seen
     #
     push( @request_array, {
-        imdb_id => $imdb_id,
-        title => $title_str,
-        year => $year_nbr,
+        imdb_id => $rating->{ 'imdb_id' },
+        title => $rating->{ 'title_str' },
+        year => $rating->{ 'year_nbr' },
         plays => 1,
         last_played => $timestamp
       } );
