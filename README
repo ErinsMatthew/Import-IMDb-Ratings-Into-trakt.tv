@@ -9,6 +9,9 @@
 #  Trakt.
 #
 #  ==  Instructions  ==
+#  This script should be able to run on all platforms
+#  that support Perl and the dependencies below.
+#
 #  To use this script, you will need to perform the
 #  following steps.
 #
