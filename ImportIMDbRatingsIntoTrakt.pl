@@ -733,9 +733,9 @@ sub get_ratings_into_array {
         my @fields = $csv->fields();
 
         my $imdb_id = $fields[ 1 ];
-        my $title_str = $fields[ 6 ];
-        my $year_nbr = $fields[ 9 ];
-        my $rating_nbr = $fields[ 5 ];
+        my $title_str = $fields[ 5 ];
+        my $year_nbr = $fields[ 11 ];
+        my $rating_nbr = $fields[ 8 ];
 
 
         if ( $imdb_id =~ /tt[0-9]{7}/ ) {
