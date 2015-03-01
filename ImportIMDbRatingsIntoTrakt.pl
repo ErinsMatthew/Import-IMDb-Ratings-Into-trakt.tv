@@ -70,6 +70,7 @@ my $TRAKT_USERNAME = '<Enter Value Here>';
 my $TRAKT_PASSWORD = '<Enter Value Here>';
 my $TRAKT_API_KEY = '<Enter Value Here>';
 
+# set to 0 if you want to use the advanced rating (1-10)
 my $LOVE_MINIMUM = 6;
 
 
@@ -401,7 +402,9 @@ RATING1: foreach $rating ( @ratings ) {
     #
     #  build rating string
     #
-    if ( $rating_nbr >= $LOVE_MINIMUM ) {
+    if ( $LOVE_MINIMUM <= 0 ) {
+        $rating_str = $rating_nbr;
+    } elsif ( $rating_nbr >= $LOVE_MINIMUM ) {
         $rating_str = 'love';
     } else {
         $rating_str = 'hate';
